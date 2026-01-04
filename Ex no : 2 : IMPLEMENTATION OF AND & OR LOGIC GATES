@@ -1,0 +1,48 @@
+coords = [(0, 0), (0, 1), (1, 0), (1, 1)]
+step_size = 0.1
+
+print("OR Gate")
+wa, wb, offset = -0.5, 0.7, 0.88
+expected_vals = [0, 1, 1, 1]
+
+for epoch in range(1):
+    total_err = 0
+    for idx in range(len(coords)):
+        val1, val2 = coords[idx]
+        weighted_sum = (val1 * wa) + (val2 * wb) + offset
+        
+        prediction = 1 if weighted_sum >= 0 else 0
+        delta = expected_vals[idx] - prediction
+        
+        wa += step_size * delta * val1
+        wb += step_size * delta * val2
+        offset += step_size * delta
+        
+        total_err += abs(delta)
+    if total_err == 0:
+        break
+
+print("Final OR:", wa, wb, offset)
+
+print("\nAND Gate")
+wa, wb, offset = -0.5, 0.7, 0.88
+expected_vals = [0, 0, 0, 1]
+
+for epoch in range(1):
+    total_err = 0
+    for idx in range(len(coords)):
+        val1, val2 = coords[idx]
+        weighted_sum = (val1 * wa) + (val2 * wb) + offset
+        
+        prediction = 1 if weighted_sum >= 0 else 0
+        delta = expected_vals[idx] - prediction
+        
+        wa += step_size * delta * val1
+        wb += step_size * delta * val2
+        offset += step_size * delta
+        
+        total_err += abs(delta)
+    if total_err == 0:
+        break
+
+print("Final AND:", wa, wb, offset)
